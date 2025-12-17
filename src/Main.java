@@ -19,9 +19,9 @@ public class Main {
                 new Course("Databases", 4, new Professor[]{}, new Student[]{})
         };
 
-        s1.courses_list = courses;
-        s2.courses_list = courses;
-        s3.courses_list = courses;
+        s1.coursesList = courses;
+        s2.coursesList = courses;
+        s3.coursesList = courses;
 
         University aitu = new University(
                 "Aitu",
