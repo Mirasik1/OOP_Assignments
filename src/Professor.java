@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Professor extends Person{
     public String courseName;
 
@@ -12,9 +14,22 @@ public class Professor extends Person{
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-    public String getValues(){
-        String info = "Professor's name: "+ name +"\nProfessor's surname: " + surname+"\nProfessor's age: " +age + "\nProfessor's course: " + courseName;
-        return info;
 
+    @Override
+    public boolean equals(Object o) {
+        if (!super.equals(o)) return false;
+        Professor that = (Professor) o;
+        return Objects.equals(courseName, that.courseName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), courseName);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nCourse: " + courseName;
     }
 }

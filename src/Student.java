@@ -1,6 +1,10 @@
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Student extends Person {
     public int currentYear;
     public Course[] coursesList;
+
 
     public Student(String name, String surname, int age, int current_year) {
         super(name, surname, age);
@@ -21,13 +25,36 @@ public class Student extends Person {
         this.coursesList = coursesList;
     }
 
-    public String getValues(){
-        String info = "Student's name: "+ name +"\nStudent's surname: " + surname+"\nStudent's age: " +age + "\nStudent's current year: " + currentYear;
-        String info_courses = "Student's courses: \n";
-        for (int i = 0; i< coursesList.length; i++){
-            info_courses += coursesList[i].courseName +"\n";
-        }
-        return info+info_courses;
 
+    @Override
+    public boolean equals(Object o) {
+        if (!super.equals(o)) return false;
+        Student student = (Student) o;
+        return currentYear == student.currentYear &&
+                Arrays.equals(coursesList, student.coursesList);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                super.hashCode(),
+                currentYear,
+                Arrays.hashCode(coursesList)
+        );
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(super.toString());
+        sb.append("\nCurrent year: ").append(currentYear);
+
+        if (coursesList != null) {
+            sb.append("\nCourses:");
+            for (Course c : coursesList) {
+                sb.append("\n- ").append(c.courseName);
+            }
+        }
+        return sb.toString();
+    }
+
 }

@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
+
 public class Course {
     public String courseName;
     public int credits;
@@ -38,25 +42,48 @@ public class Course {
     public void setStudents(Student[] students) {
         this.students = students;
     }
-    public String getValues() {
-        String info = "Course name: " + courseName + "\nCredits: " + credits;
-        String infoProfessors = "\nProfessors:\n";
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Course name: ").append(courseName)
+                .append("\nCredits: ").append(credits);
+
+        sb.append("\nProfessors:");
         if (professors != null && professors.length > 0) {
-            for (int i = 0; i < professors.length; i++) {
-                infoProfessors += professors[i].name + " " + professors[i].surname + "\n";
+            for (Professor p : professors) {
+                sb.append("\n- ").append(p.getName())
+                        .append(" ").append(p.getSurname());
             }
         } else {
-            infoProfessors += "No professors assigned\n";
+            sb.append("\n- none");
         }
-        String infoStudents = "Students:\n";
+
+        sb.append("\nStudents:");
         if (students != null && students.length > 0) {
-            for (int i = 0; i < students.length; i++) {
-                infoStudents += students[i].name + " " + students[i].surname + "\n";
+            for (Student s : students) {
+                sb.append("\n- ").append(s.getName())
+                        .append(" ").append(s.getSurname());
             }
         } else {
-            infoStudents += "No students enrolled\n";
+            sb.append("\n- none");
         }
-        return info + "\n" + infoProfessors + infoStudents;
+
+        return sb.toString();
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course)) return false;
+        Course course = (Course) o;
+        return credits == course.credits &&
+                Objects.equals(courseName, course.courseName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseName, credits);
     }
 
 }
