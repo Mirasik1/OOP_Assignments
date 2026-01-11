@@ -5,9 +5,9 @@ import java.util.Objects;
 public class University {
     public String name;
     public String address;
-    public Student[] students_list;
-    public Course[] courses_list;
-    public Professor[] proffessors_list;
+    Student[] students_list = new Student[0];
+    Professor[] professors_list = new Professor[0];
+    Course[] courses_list = new Course[0];
 
     public enum SortTypeStudents {
         NAME, SURNAME,AGE, YEAR
@@ -25,9 +25,9 @@ public class University {
     public University(String _name, String _address, Student[] _students_list, Course[] _course_list, Professor[] _proffessors_list){
         name = _name;
         address = _address;
-        students_list = _students_list;
-        courses_list = _course_list;
-        proffessors_list = _proffessors_list;
+        this.students_list = new Student[0];
+        this.courses_list = new Course[0];
+        this.professors_list= new Professor[0];
         System.out.println(getValues());
 
 
@@ -43,8 +43,8 @@ public class University {
             info_courses += courses_list[i].toString()+"\n";
         }
         String info_professors = "Professors:\n";
-        for (int i = 0; i<proffessors_list.length;i++){
-            info_students += proffessors_list[i].toString()+"\n";
+        for (int i = 0; i<professors_list.length;i++){
+            info_students += professors_list[i].toString()+"\n";
         }
         return info + info_courses + info_professors + info_students;
 
@@ -61,8 +61,8 @@ public class University {
     public Professor getProfessorByName(String professor_name){
 
         for (int i =0;i<this.students_list.length;i++){
-            if (this.proffessors_list[i].equals(professor_name)){
-                return proffessors_list[i];
+            if (this.professors_list[i].equals(professor_name)){
+                return professors_list[i];
             }
         }
         return null;
@@ -81,7 +81,7 @@ public class University {
     }
     public Professor[] findProfessors(ProfessorFilter filter, Object value) {
 
-        return Arrays.stream(this.proffessors_list)
+        return Arrays.stream(this.professors_list)
                 .filter(p -> p != null)
                 .filter(p -> switch (filter) {
                     case NAME -> p.getName().equalsIgnoreCase((String) value);
@@ -111,7 +111,7 @@ public class University {
     }
     public String getAllProfessors(){
         String info = "";
-        for (Professor professor : this.proffessors_list) {
+        for (Professor professor : this.professors_list) {
             info += professor.toString();
         }
         return info;
@@ -139,7 +139,7 @@ public class University {
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
 
-        Arrays.sort(this.proffessors_list, comparator);
+        Arrays.sort(this.professors_list, comparator);
     }
     @Override
     public String toString() {
@@ -162,8 +162,8 @@ public class University {
         }
 
         sb.append("\n\nProfessors:");
-        if (proffessors_list != null) {
-            for (Professor p : proffessors_list) {
+        if (professors_list != null) {
+            for (Professor p : professors_list) {
                 sb.append("\n").append(p);
             }
         }
